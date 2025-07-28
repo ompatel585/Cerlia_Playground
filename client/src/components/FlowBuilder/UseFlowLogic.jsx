@@ -12,14 +12,13 @@ import {
   createNode,
   serviceCounter as baseServiceCounter,
 } from "./NodeConfig.jsx";
-import { useNavigate } from "react-router-dom";
 
 let serviceCounter = baseServiceCounter;
 
 export const useFlowLogic = () => {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
-  const navigate = useNavigate();
+  const [showConnect, setShowConnect] = useState(false); // ADD THIS
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -89,7 +88,7 @@ export const useFlowLogic = () => {
     if (node.id === "add-service") {
       addServiceNode();
     } else if (node.id === "n1") {
-      navigate("/connect");
+      setShowConnect(true); // REPLACE navigate
     }
   };
 
@@ -100,5 +99,7 @@ export const useFlowLogic = () => {
     onEdgesChange,
     onConnect,
     handleNodeClick,
+    showConnect,
+    setShowConnect, // RETURN these to use in FlowBuilder
   };
 };

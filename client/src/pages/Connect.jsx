@@ -1,4 +1,3 @@
-
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 // import RestTriggers from "../components/RestAPI/RestTriggers";
@@ -129,7 +128,6 @@
 
 // export default Connect;
 
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RestTriggers from "../components/RestAPI/RestTriggers";
@@ -184,7 +182,8 @@ const Connect = () => {
   };
 
   return (
-    <div className="min-h-screen text-white px-4 py-6">
+    // <div className="min-h-screen text-white px-4 py-4">
+    <div className="bg-gray-900 text-white rounded-lg p-6 w-[95%] max-w-5xl shadow-lg relative">
       <div className="flex flex-col justify-center items-center mb-6 text-center">
         <h1 className="text-3xl font-bold">API Endpoint</h1>
         <p className="text-xl">
@@ -221,7 +220,7 @@ const Connect = () => {
               {methods.map((method) => (
                 <label
                   key={method}
-                  className={`flex items-center gap-3 cursor-pointer px-3 py-2 rounded-md transition-all
+                  className={`flex items-center gap-3 cursor-pointer px-3 py-2 rounded-md transition-all w-[350px]
                     ${
                       selectedMethods.includes(method)
                         ? "bg-blue-600 text-white shadow"

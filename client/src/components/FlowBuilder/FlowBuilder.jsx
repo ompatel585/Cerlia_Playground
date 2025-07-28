@@ -1,8 +1,9 @@
-// client/src/components/FlowBuilder/Flowbuilder.jsx
-import React from "react";
+// client/src/components/FlowBuilder/FlowBuilder.jsx
+import React, { useEffect } from "react";
 import { ReactFlow, MiniMap, ReactFlowProvider } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useFlowLogic } from "./useFlowLogic.jsx";
+import Connect from "../../pages/Connect.jsx";
 
 const FlowBuilder = () => {
   const {
@@ -12,11 +13,25 @@ const FlowBuilder = () => {
     onEdgesChange,
     onConnect,
     handleNodeClick,
+    showConnect,
+    setShowConnect,
   } = useFlowLogic();
+
+  // Disable background scroll when modal is open
+  useEffect(() => {
+    if (showConnect) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showConnect]);
 
   return (
     <ReactFlowProvider>
-      <div style={{ width: "100vw", height: "100vh" }} className="">
+      <div style={{ width: "100vw", height: "100vh" }} className="relative">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -41,6 +56,32 @@ const FlowBuilder = () => {
           nodeStrokeWidth={3}
           className="rounded-xl"
         />
+
+        {/* Modal */}
+        {showConnect && (
+          <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
+            <div
+              className="
+                bg-gray-900
+                text-white
+                rounded-lg
+                p-6
+                w-[95%]
+                max-w-5xl
+                shadow-lg
+                relative
+              "
+            >
+              <button
+                onClick={() => setShowConnect(false)}
+                className="absolute top-3 right-4 text-white text-2xl"
+              >
+                &times;
+              </button>
+              <Connect />
+            </div>
+          </div>
+        )}
       </div>
     </ReactFlowProvider>
   );
