@@ -4,6 +4,11 @@ import { ReactFlow, MiniMap, ReactFlowProvider } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useFlowLogic } from "./useFlowLogic.jsx";
 import Connect from "../../pages/Connect.jsx";
+import { X } from 'lucide-react';
+
+
+
+
 
 const FlowBuilder = () => {
   const {
@@ -74,10 +79,11 @@ const FlowBuilder = () => {
             >
               <button
                 onClick={() => setShowConnect(false)}
-                className="absolute top-3 right-4 text-white text-2xl"
+                className="absolute top-3 right-4 text-white text-2xl cursor-pointer transition-all duration-200 ease-in-out hover:shadow-[0_0_10px_rgba(255,255,255,0.7)] hover:scale-105"
               >
-                &times;
+                <X />
               </button>
+
               <Connect />
             </div>
           </div>

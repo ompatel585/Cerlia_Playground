@@ -5,7 +5,7 @@ import FlowBuilder from "./components/FlowBuilder/FlowBuilder.jsx";
 
 const App = () => {
   return (
-    <div className="bg-black">
+    <div className="bg-[#090440]">
       <Router>
         <Routes>
           <Route path="/" element={<FlowBuilder />} />

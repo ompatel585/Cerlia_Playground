@@ -10,11 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "-": "^0.0.1",
     "@tailwindcss/vite": "^4.1.11",
     "@xyflow/react": "^12.8.2",
+    "lucide-react": "^0.533.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.7.0",
+    "scrollbar": "^0.1.12",
+    "tailwind": "^4.0.0",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
@@ -26,6 +30,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
+    "tailwind-scrollbar": "^4.0.2",
     "vite": "^7.0.4"
   }
 }
