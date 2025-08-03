@@ -1,2 +1,27 @@
 @import 'tailwindcss';
 @plugin 'tailwind-scrollbar';
+/* GLOBAL SCROLLBAR STYLES */
+
+/* 1. Firefox */
+
+
+/* 2. Webkit Browsers: Chrome, Edge, Brave, Safari */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#642bff , #ff22b6);
+  border-radius: 10px;
+}
+
+/* ✅ This removes those ugly arrow buttons completely */
+::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}
