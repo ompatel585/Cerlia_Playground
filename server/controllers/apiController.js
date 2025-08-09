@@ -1,41 +1,7 @@
-// exports.get = (req, res) => {
-//     res.json({
-//         message: `GET request to ${req.originalUrl}`,
-//         data: [], // Placeholder for data
-//     });
-// };
-
-// exports.post = (req, res) => {
-//     res.json({
-//         message: `POST request to ${req.originalUrl}`,
-//         data: req.body, // Echo back the request body
-//     });
-// };
-
-// exports.put = (req, res) => {
-//     res.json({
-//         message: `PUT request to ${req.originalUrl}`,
-//         id: req.params.id,
-//         data: req.body,
-//     });
-// };
-
-// exports.patch = (req, res) => {
-//     res.json({
-//         message: `PATCH request to ${req.originalUrl}`,
-//         id: req.params.id,
-//         data: req.body,
-//     });
-// };
-
-// exports.delete = (req, res) => {
-//     res.json({
-//         message: `DELETE request to ${req.originalUrl}`,
-//         id: req.params.id,
-//     });
-// };
 
 
+
+//validateData.js or controller file
 function validateData(data, schema) {
     const errors = [];
 
@@ -92,14 +58,15 @@ function getSchemaForRoute(path) {
     return routeSchemas[path] || [];
 }
 
-exports.get = (req, res) => {
+// Handlers
+function get(req, res) {
     res.json({
         message: `GET request to ${req.originalUrl}`,
         data: [],
     });
-};
+}
 
-exports.post = (req, res) => {
+function post(req, res) {
     const schema = getSchemaForRoute(req.path);
     const errors = validateData(req.body, schema);
 
@@ -111,9 +78,9 @@ exports.post = (req, res) => {
         message: `POST request to ${req.originalUrl}`,
         data: req.body,
     });
-};
+}
 
-exports.put = (req, res) => {
+function put(req, res) {
     const schema = getSchemaForRoute(req.path);
     const errors = validateData(req.body, schema);
 
@@ -126,9 +93,9 @@ exports.put = (req, res) => {
         id: req.params.id,
         data: req.body,
     });
-};
+}
 
-exports.patch = (req, res) => {
+function patch(req, res) {
     const schema = getSchemaForRoute(req.path);
     const errors = validateData(req.body, schema);
 
@@ -141,11 +108,15 @@ exports.patch = (req, res) => {
         id: req.params.id,
         data: req.body,
     });
-};
+}
 
-exports.delete = (req, res) => {
+function del(req, res) {
     res.json({
         message: `DELETE request to ${req.originalUrl}`,
         id: req.params.id,
     });
-};
+}
+
+// Export as named exports
+export { get, post, put, patch, del as delete };
+

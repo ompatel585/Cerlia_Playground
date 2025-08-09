@@ -20,6 +20,22 @@ export const useFlowLogic = () => {
   const [edges, setEdges] = useState(initialEdges);
   const [showConnect, setShowConnect] = useState(false); // ADD THIS
 
+
+  const [showSchemaPopup, setShowSchemaPopup] = useState(false);
+
+   const nodesWithCallbacks = nodes.map((node) => {
+     if (node.id === "n2") {
+       return {
+         ...node,
+         data: {
+           ...node.data,
+           openPopup: () => setShowSchemaPopup(true),
+         },
+       };
+     }
+     return node;
+   });
+
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
     []
@@ -88,9 +104,14 @@ export const useFlowLogic = () => {
     if (node.id === "add-service") {
       addServiceNode();
     } else if (node.id === "n1") {
-      setShowConnect(true); // REPLACE navigate
+      setShowConnect(true);
+    } else if (node.id === "n2") {
+      // Do your desired operation here, e.g., open schema editor or show alert
+      alert("Schema node clicked!");
+      // Or trigger any modal or state update you want
     }
   };
+
 
   return {
     nodes,

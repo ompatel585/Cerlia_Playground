@@ -1,0 +1,98 @@
+[
+  {
+    "path": "/hello",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "path": "/kljkl",
+    "methods": [
+      "GET",
+      "POST"
+    ]
+  },
+  {
+    "path": "/dsa",
+    "methods": [
+      "GET",
+      "POST"
+    ]
+  },
+  {
+    "path": "/ksdjldsjkljdslk",
+    "methods": [
+      "GET",
+      "PUT"
+    ]
+  },
+  {
+    "path": "/new",
+    "methods": [
+      "GET",
+      "POST"
+    ]
+  },
+  {
+    "path": "/kl",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "path": "/fs",
+    "methods": [
+      "GET",
+      "POST"
+    ]
+  },
+  {
+    "path": "/bh",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "path": "/nm",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "path": "/njk",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "path": "/jij",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "path": "/hhj",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "path": "/b",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "path": "/bf",
+    "methods": [
+      "GET",
+      "POST"
+    ]
+  },
+  {
+    "path": "/fdssdf",
+    "methods": [
+      "GET"
+    ]
+  }
+]

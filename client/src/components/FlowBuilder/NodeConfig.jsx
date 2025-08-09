@@ -1,10 +1,12 @@
 // nodesConfig.js
 import { MarkerType } from "@xyflow/react";
+import SchemaNode from "../InputSchema/SchemaNode";
 
 export let serviceCounter = 1;
 
-export const createNode = (id, y, label) => ({
+export const createNode = (id, y, label, type = "default") => ({
   id,
+  type,
   position: { x: 0, y },
   data: { label },
   style: {
@@ -12,15 +14,15 @@ export const createNode = (id, y, label) => ({
     borderRadius: 8,
     border: "1px solid #ccc",
     backgroundColor: "#f0f0f0",
-    cursor:"pointer" , // 👈 pointer only for API Endpoint
+    cursor: "pointer", // 👈 pointer only for API Endpoint
   },
 });
 
 export const initialNodes = [
-    createNode("n1", 0, "API Endpoint"),
-    createNode("n2", 100, "Schema"),
-    createNode("add-service", 200, "+ Add a new Service Node"),
-    createNode("n4", 300, "Output Node"),
+  createNode("n1", 0, "API Endpoint"),
+  createNode("n2", 100, "Schema", "schemaNode"), // assign custom type here
+  createNode("add-service", 200, "+ Add a new Service Node"),
+  createNode("n4", 300, "Output Node"),
 ];
 
 export const initialEdges = [
