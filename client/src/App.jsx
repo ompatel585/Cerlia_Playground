@@ -6,9 +6,11 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import FlowBuilder from "./components/FlowBuilder/FlowBuilder";
+// import FlowBuilder from "./components/FlowBuilder/FlowBuilder";
 import Login from "./pages/auth/Login.jsx";
 import { useAuth, AuthProvider } from "./state/hooks/useAuth.jsx";
+import RestTriggers from "./pages/REST Triggers/index.jsx";
+import FlowBuilder from "./components/FlowBuilder/FlowBuilder.jsx";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -20,7 +22,9 @@ const ProtectedRoute = ({ children }) => {
 
 const App = () => {
   return (
-    <div className="bg-[#030116] min-h-screen">
+    // <div className="bg-[#030116] min-h-screen">
+          <div className="bg-[#010411] min-h-screen">
+
       <AuthProvider>
         <Router>
           <Routes>
@@ -29,7 +33,8 @@ const App = () => {
               path="/"
               element={
                 <ProtectedRoute>
-                  <FlowBuilder />
+                  <RestTriggers />
+                  {/* <FlowBuilder /> */}
                 </ProtectedRoute>
               }
             />
