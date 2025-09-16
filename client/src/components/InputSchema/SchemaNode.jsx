@@ -104,7 +104,7 @@ import SchemaPopup from "./SchemaPopup";
 import { Plus } from "lucide-react";
 
 export default function SchemaNode({ id, data }) {
-  const [showPopup, setShowPopup] = useState(false);
+  // const [showPopup, setShowPopup] = useState(false);
   const [fields, setFields] = useState([]);
   const containerRef = useRef(null);
   const prevHeight = useRef(0);
@@ -138,11 +138,19 @@ export default function SchemaNode({ id, data }) {
   return (
     <div
       ref={containerRef}
-      className="relative flex flex-col gap-2 p-3 bg-gradient-to-b from-white to-gray-50 border border-gray-200 rounded-xl shadow-lg w-[236px] overflow-y-auto hover:shadow-xl transition-all duration-200"
+      className="relative flex flex-col gap-2 p-3 bg-gradient-to-b from-white to-gray-50 border border-gray-200 rounded-xl shadow-lg w-[228px]  hover:shadow-xl transition-all duration-200"
     >
       {/* Handles */}
-      <Handle type="target" position={Position.Top} className="!bg-indigo-500" />
-      <Handle type="source" position={Position.Bottom} className="!bg-indigo-500" />
+      <Handle
+        type="target"
+        position={Position.Top}
+        className="!bg-indigo-500"
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        className="!bg-indigo-500"
+      />
 
       {/* Title */}
       <h4 className="text-sm font-bold text-gray-800 tracking-wide border-b pb-1 border-gray-100">
@@ -168,16 +176,17 @@ export default function SchemaNode({ id, data }) {
 
       {/* Add button */}
       <button
-        onClick={() => setShowPopup(true)}
-        className="flex items-center justify-center gap-1 mt-1 bg-indigo-500 text-white text-xs px-2 py-1.5 rounded-md hover:bg-indigo-600 transition-all"
+        // onClick={() => setShowPopup(true)}
+        onClick={() => data.openPopup(id, handleSave)}
+        className="cursor-pointer flex items-center justify-center gap-1 mt-1 bg-indigo-500 text-white text-xs px-2 py-1.5 rounded-md hover:bg-indigo-600 transition-all"
       >
         <Plus size={14} /> Add
       </button>
 
       {/* Popup */}
-      {showPopup && (
+      {/* {showPopup && (
         <SchemaPopup onClose={() => setShowPopup(false)} onSave={handleSave} />
-      )}
+      )} */}
     </div>
   );
 }

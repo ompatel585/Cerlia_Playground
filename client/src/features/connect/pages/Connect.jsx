@@ -182,7 +182,7 @@
 
 
 import React, { useState } from "react";
-import RestTriggers from "../../../components/RestAPI/RestTriggers";
+import RestTriggers from "../components/RestTriggers";
 import ConnectForm from "../components/ConnectForm";
 
 const Connect = () => {

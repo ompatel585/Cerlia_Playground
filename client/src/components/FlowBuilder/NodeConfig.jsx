@@ -194,7 +194,7 @@ export const initialNodes = [
     targetPosition: Position.Top,
     sourcePosition: Position.Bottom,
   }),
-  createNode("add-service", 0, 300, "+ Add a new Service Node"),
+  createNode("add-service", 0, 200, "+ Add a new Service Node"),
   createNode("n4", 0, 400, "Output Node"),
 ];
 

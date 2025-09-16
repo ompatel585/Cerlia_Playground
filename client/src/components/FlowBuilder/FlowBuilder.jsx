@@ -218,7 +218,11 @@
 
 // export default FlowBuilder;
 
-import React, { useEffect } from "react";
+
+
+
+
+import React, { useEffect ,useState } from "react";
 import { ReactFlow, MiniMap, ReactFlowProvider } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useFlowLogic } from "./useFlowLogic.jsx";
@@ -227,6 +231,7 @@ import { X } from "lucide-react";
 import { useAuth } from "../../state/hooks/useAuth.jsx";
 import Navbar from "../Navbar/Navbar"; // ✅ NEW
 import SchemaNode from "../InputSchema/SchemaNode.jsx"; // correct relative path
+import SchemaPopup from "../InputSchema/SchemaPopup.jsx";
 
 const nodeTypes = {
   schemaNode: SchemaNode,
@@ -234,7 +239,7 @@ const nodeTypes = {
 
 const FlowBuilder = () => {
   const {
-    nodes,
+    nodes: rawNodes,
     edges,
     onNodesChange,
     onEdgesChange,
@@ -246,12 +251,45 @@ const FlowBuilder = () => {
 
   const { user } = useAuth(); // assumes user object like { name: "Om Patel", email: ... }
 
+  // State to manage SchemaPopup visibility and data
+  const [popup, setPopup] = useState({
+    isOpen: false,
+    nodeId: null,
+    onSave: null,
+  });
+
+  // Handler to open popup
+  const openPopup = (nodeId, onSave) => {
+    setPopup({ isOpen: true, nodeId, onSave });
+  };
+
+  // Handler to close popup
+  const closePopup = () => {
+    setPopup({ isOpen: false, nodeId: null, onSave: null });
+  };
+
+  // Map over rawNodes to include openPopup in each node's data
+  const nodes = rawNodes.map((node) => ({
+    ...node,
+    data: {
+      ...node.data,
+      openPopup,
+    },
+  }));
   useEffect(() => {
-    document.body.style.overflow = showConnect ? "hidden" : "auto";
+    document.body.style.overflow =
+      showConnect || popup.isOpen ? "hidden" : "auto";
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [showConnect]);
+  }, [showConnect, popup.isOpen]);
+
+  // useEffect(() => {
+  //   document.body.style.overflow = showConnect ? "hidden" : "auto";
+  //   return () => {
+  //     document.body.style.overflow = "auto";
+  //   };
+  // }, [showConnect]);
 
   return (
     <ReactFlowProvider>
@@ -300,6 +338,11 @@ const FlowBuilder = () => {
                 </button>
               </div>
             </div>
+          )}
+
+          {/* Schema Popup */}
+          {popup.isOpen && (
+            <SchemaPopup onClose={closePopup} onSave={popup.onSave} />
           )}
         </div>
       </div>
