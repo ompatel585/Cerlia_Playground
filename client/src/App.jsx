@@ -9,7 +9,7 @@ import {
 // import FlowBuilder from "./components/FlowBuilder/FlowBuilder";
 import Login from "./pages/auth/Login.jsx";
 import { useAuth, AuthProvider } from "./state/hooks/useAuth.jsx";
-import RestTriggers from "./pages/REST Triggers/index.jsx";
+import RestTriggers from "./pages/Flow Builder/index.jsx";
 import FlowBuilder from "./components/FlowBuilder/FlowBuilder.jsx";
 
 const ProtectedRoute = ({ children }) => {

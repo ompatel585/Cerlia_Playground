@@ -17,6 +17,7 @@
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.533.0",
+    "qrcode": "^1.5.4",
     "react": "^19.1.0",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^19.1.0",
