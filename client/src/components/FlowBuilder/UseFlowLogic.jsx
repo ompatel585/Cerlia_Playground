@@ -1,6 +1,6 @@
 
 
-
+//client/src/components/FlowBuilder/UseFlowLogic.jsx
 import { useState, useCallback, useEffect } from "react";
 import { applyNodeChanges, applyEdgeChanges, MarkerType } from "@xyflow/react";
 import {
@@ -110,6 +110,7 @@ export const useFlowLogic = () => {
   
   
   const addServiceNode = (sourceId) => {
+    // const sourceId = "add-service"; // fallback or define logic
     const newServiceId = `service-${serviceCounter++}`;
     const newServiceLabel = `Service Node ${serviceCounter - 1}`;
 
@@ -193,5 +194,6 @@ export const useFlowLogic = () => {
     handleNodeClick,
     showConnect,
     setShowConnect,
+    addServiceNode, // ✅ make sure this is returned
   };
 };

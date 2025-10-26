@@ -1,3 +1,4 @@
+//client/src/features/serviceNodes/services/qrService.js
 import QRCode from "qrcode";
 
 export const generateQRCode = async (text) => {

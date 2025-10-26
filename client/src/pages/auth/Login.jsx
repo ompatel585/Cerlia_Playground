@@ -46,16 +46,20 @@ const Login = () => {
       {/* Main Title and Slogan */}
       <div className="text-center mb-10 sm:mb-12">
         <div className="text-center">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight sm:tracking-wide leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight sm:tracking-wide leading-tight">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
               Welcome to
             </span>
             <span className="font-extrabold text-purple-400 drop-shadow-xl animate-pulse">
-              Cerlia
+              Snappy MVP
             </span>
           </h1>
-          <p className="mt-4 text-xl sm:text-2xl max-w-2xl mx-auto font-light text-gray-400">
-            Your creativity, powered by a smart workflow
+          <p className="mt-4 text-md sm:text-lg max-w-2xl mx-auto font-medium text-gray-400">
+            {/* Your creativity, powered by a smart workflow
+            
+            */}
+
+            From Idea to Prototype, Fast and Effortless.
           </p>
         </div>
       </div>
@@ -72,7 +76,7 @@ const Login = () => {
         {/* Subtle hover effect for the card */}
         {/* Sign In Title */}
         <h2
-          className=" text-3xl sm:text-4xl font-bold text-white tracking-tight 
+          className=" text-2xl sm:text-3xl font-bold text-white tracking-tight 
                        bg-gradient-to-r from-indigo-300 to-purple-300 text-transparent bg-clip-text"
         >
           Sign in to continue

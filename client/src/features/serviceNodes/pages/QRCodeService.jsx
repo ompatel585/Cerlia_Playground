@@ -1,3 +1,4 @@
+//client/src/features/serviceNodes/pages/QRCodeService.jsx
 import React, { useState } from "react";
 import { useQRCode } from "../hooks/useQRCode.js";
 
