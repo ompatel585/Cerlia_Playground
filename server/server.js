@@ -68,11 +68,16 @@ import bodyParser from 'body-parser';
 import passport from 'passport';
 import dotenv from 'dotenv';
 
+
+
+
+
 import connectDB from './config/db.js';
 // import sessionConfig from './config/session.js';
 
 import dynamicRoutes from './routes/dynamicRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import qrRoutes from './routes/services/qrRoutes.js'
 import './config/passport.js';
 import sessionConfig from './config/session.js';
 
@@ -97,6 +102,8 @@ app.use(passport.session());
 // Routes
 app.use('/api', dynamicRoutes);
 app.use('/api/auth', authRoutes);
+
+app.use('/api/qr', qrRoutes);
 
 // Start server
 app.listen(port, () => {

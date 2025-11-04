@@ -146,6 +146,10 @@
 
 // export default FlowBuilder;
 
+
+
+
+
 // client/src/components/FlowBuilder/FlowBuilder.jsx
 import React, { useEffect, useState } from "react";
 import { ReactFlow, MiniMap, ReactFlowProvider } from "@xyflow/react";
@@ -158,9 +162,13 @@ import Navbar from "../Navbar/Navbar"; // ✅ NEW
 import SchemaNode from "../InputSchema/SchemaNode.jsx"; // correct relative path
 import SchemaPopup from "../InputSchema/SchemaPopup.jsx";
 import ServicePopup from "../../features/serviceNodes/components/ServicePopup.jsx";
+import QRCodeNode from "../../features/serviceNodes/services/qrCode/QRCodeNode.jsx";
+
 
 const nodeTypes = {
+  // schemaNode: SchemaNode,
   schemaNode: SchemaNode,
+  qrNode: QRCodeNode,
 };
 
 const FlowBuilder = () => {
@@ -186,6 +194,8 @@ const FlowBuilder = () => {
     onSave: null,
   });
   const [showServicePopup, setShowServicePopup] = useState(false);
+
+  
 
   // Handler to open popup
   const openPopup = (nodeId, onSave) => {

@@ -4,6 +4,12 @@
 // nodeConfig.jsx
 import { MarkerType, Position } from "@xyflow/react";
 
+
+import QRCodeNode from "../../features/serviceNodes/services/qrCode/QRCodeNode";
+import SchemaNode from "../InputSchema/SchemaNode";  // ✅ add this line
+
+
+
 export let serviceCounter = 1;
 
 export const createNode = (id, x, y, label, type = null, opts = {}) => ({
@@ -58,3 +64,8 @@ export const initialEdges = [
     style: { stroke: "#FC0AEC" },
   },
 ];
+
+export const nodeTypes = {
+  schemaNode: SchemaNode,
+  qrNode: QRCodeNode,
+};
