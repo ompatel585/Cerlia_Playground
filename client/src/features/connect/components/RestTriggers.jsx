@@ -1,6 +1,6 @@
 
 
-
+// client/src/features/connect/components/RestTriggers.jsx
 const RestTriggers = ({ routes }) => {
   return (
     <div className="bg-gray-900 p-4 rounded-md">

@@ -1,6 +1,6 @@
 
 
-// SchemaPopup.jsx
+//client/src/components/InputSchema/SchemaPopup.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { X, ChevronDown, Check } from "lucide-react";
 

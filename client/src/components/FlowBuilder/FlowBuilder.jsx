@@ -154,7 +154,7 @@
 import React, { useEffect, useState } from "react";
 import { ReactFlow, MiniMap, ReactFlowProvider } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { useFlowLogic } from "./useFlowLogic.jsx";
+import { useFlowLogic } from "./UseFlowLogic.jsx";
 import Connect from "../../features/connect/pages/Connect.jsx";
 import { X } from "lucide-react";
 import { useAuth } from "../../state/hooks/useAuth.jsx";
@@ -163,12 +163,14 @@ import SchemaNode from "../InputSchema/SchemaNode.jsx"; // correct relative path
 import SchemaPopup from "../InputSchema/SchemaPopup.jsx";
 import ServicePopup from "../../features/serviceNodes/components/ServicePopup.jsx";
 import QRCodeNode from "../../features/serviceNodes/services/qrCode/QRCodeNode.jsx";
-
+import OutputNode from "../../features/OutputNode/OutputNode.jsx";
 
 const nodeTypes = {
   // schemaNode: SchemaNode,
+  // connectNode: Connect, // Your Connect
   schemaNode: SchemaNode,
   qrNode: QRCodeNode,
+  outputNode: OutputNode, // New
 };
 
 const FlowBuilder = () => {
@@ -246,7 +248,8 @@ const FlowBuilder = () => {
             onNodeClick={handleNodeClick}
             fitView
             // nodeInteractionWidth={40}
-            nodesDraggable={false}
+            nodesDraggable={true}
+            
             nodesConnectable={false}
             elementsSelectable={false}
             nodeTypes={nodeTypes}

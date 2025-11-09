@@ -11,6 +11,9 @@
 //         res.redirect(process.env.CLIENT_URL);
 //     });
 // };
+
+
+//server/controllers/authController.js
 import dotenv from 'dotenv'
 dotenv.config();
 function getUser(req, res) {

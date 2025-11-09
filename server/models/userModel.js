@@ -9,6 +9,8 @@
 
 // module.exports = mongoose.model("User", userSchema);
 
+
+//server/models/userModel.js
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({

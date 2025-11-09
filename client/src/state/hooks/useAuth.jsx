@@ -1,4 +1,4 @@
-// useAuth.jsx
+//client/src/state/hooks/useAuth.jsx
 import { useEffect, useState, createContext, useContext } from "react";
 import axios from "axios";
 

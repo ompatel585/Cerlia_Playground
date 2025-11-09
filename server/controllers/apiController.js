@@ -1,6 +1,6 @@
 
 
-
+// server/controllers/apiController.js
 //validateData.js or controller file
 function validateData(data, schema) {
     const errors = [];

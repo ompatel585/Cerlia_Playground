@@ -1,3 +1,4 @@
+//client/src/components/Navbar/Navbar.jsx
 import React from "react";
 import { useAuth } from "../../state/hooks/useAuth";
 import { LogOut } from "lucide-react";

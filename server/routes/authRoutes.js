@@ -23,6 +23,8 @@
 // module.exports = router;
 
 
+
+//server/routes/authRoutes.js
 import express from "express";
 import passport from "passport";
 import dotenv from 'dotenv'

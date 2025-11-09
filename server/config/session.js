@@ -1,3 +1,4 @@
+//server/config/session.js
 import session from 'express-session';
 
 const sessionConfig = session({

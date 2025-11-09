@@ -93,12 +93,76 @@
 
 
 
+// // client/src/features/serviceNodes/components/ServicePopup.jsx
+// import React, { useState } from "react";
+
+// const services = [
+//   { id: "qr-generator", name: "QR Code Generator" },
+//   // later: { id: "pdf-generator", name: "PDF Generator" }, etc.
+// ];
+
+// const ServicePopup = ({ onClose, onSelect }) => {
+//   const [selected, setSelected] = useState(null);
+
+//   const handleAdd = () => {
+//     if (!selected) return;
+//     onSelect(selected);
+//     onClose();
+//   };
+
+//   return (
+//     <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
+//       <div className="bg-white rounded-lg p-6 w-[400px] shadow-lg">
+//         <h2 className="text-xl font-bold mb-4">Add a Service</h2>
+
+//         <ul className="space-y-3">
+//           {services.map((s) => (
+//             <li key={s.id}>
+//               <button
+//                 onClick={() => setSelected(s.id)}
+//                 className={`w-full text-left px-4 py-2 rounded ${
+//                   selected === s.id ? "bg-blue-600 text-white" : "bg-gray-100"
+//                 }`}
+//               >
+//                 {s.name}
+//               </button>
+//             </li>
+//           ))}
+//         </ul>
+
+//         <div className="mt-5 flex justify-end gap-3">
+//           <button
+//             onClick={onClose}
+//             className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+//           >
+//             Cancel
+//           </button>
+//           <button
+//             onClick={handleAdd}
+//             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+//           >
+//             Add
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ServicePopup;
+
+
+
 // client/src/features/serviceNodes/components/ServicePopup.jsx
 import React, { useState } from "react";
 
+// ✅ Add 100s here easily - just ID, name, description
 const services = [
-  { id: "qr-generator", name: "QR Code Generator" },
-  // later: { id: "pdf-generator", name: "PDF Generator" }, etc.
+  { id: "qr-generator", name: "QR Code Generator", desc: "Generate QR codes from URLs" },
+  // Future additions:
+  // { id: "pdf-generator", name: "PDF Generator", desc: "Create PDFs from HTML" },
+  // { id: "email-sender", name: "Email Service", desc: "Send emails via SMTP" },
+  // { id: "image-resize", name: "Image Resizer", desc: "Resize images" },
 ];
 
 const ServicePopup = ({ onClose, onSelect }) => {
@@ -111,20 +175,23 @@ const ServicePopup = ({ onClose, onSelect }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
-      <div className="bg-white rounded-lg p-6 w-[400px] shadow-lg">
-        <h2 className="text-xl font-bold mb-4">Add a Service</h2>
+    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center">
+      <div className="bg-gray-900 text-white rounded-xl p-6 w-[400px] shadow-2xl">
+        <h2 className="text-xl font-bold mb-4">Add Service Node</h2>
 
-        <ul className="space-y-3">
+        <ul className="space-y-2 max-h-96 overflow-y-auto">
           {services.map((s) => (
             <li key={s.id}>
               <button
                 onClick={() => setSelected(s.id)}
-                className={`w-full text-left px-4 py-2 rounded ${
-                  selected === s.id ? "bg-blue-600 text-white" : "bg-gray-100"
+                className={`w-full text-left px-4 py-3 rounded-lg transition ${
+                  selected === s.id
+                    ? "bg-purple-600 border-2 border-purple-400"
+                    : "bg-gray-800 hover:bg-gray-700"
                 }`}
               >
-                {s.name}
+                <div className="font-medium">{s.name}</div>
+                <div className="text-xs text-gray-400 mt-1">{s.desc}</div>
               </button>
             </li>
           ))}
@@ -133,15 +200,16 @@ const ServicePopup = ({ onClose, onSelect }) => {
         <div className="mt-5 flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+            className="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600"
           >
             Cancel
           </button>
           <button
             onClick={handleAdd}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            disabled={!selected}
+            className="px-4 py-2 bg-purple-600 rounded-lg hover:bg-purple-700 disabled:opacity-50"
           >
-            Add
+            Add Service
           </button>
         </div>
       </div>

@@ -217,35 +217,137 @@
 
 
 
-import express from 'express';
-import routeService from '../services/routeService.js';
+// import express from 'express';
+// import routeService from '../services/routeService.js';
+
+// const router = express.Router();
+
+// router.post('/create-route', async (req, res) => {
+//     const { path, methods } = req.body;
+//     if (!path || !methods || !Array.isArray(methods) || methods.length === 0) {
+//         return res.status(400).json({ error: 'Path and at least one method are required' });
+//     }
+//     try {
+//         const result = await routeService.registerRoute(path, methods);
+//         res.json(result);
+//     } catch (error) {
+//         console.error('Error in /create-route:', error.message);
+//         res.status(400).json({ error: error.message });
+//     }
+// });
+
+// router.get('/routes', async (req, res) => {
+//     try {
+//         const routes = await routeService.getRoutes();
+//         res.json(routes);
+//     } catch (error) {
+//         console.error('Error in /routes:', error.message);
+//         res.status(500).json({ error: 'Failed to fetch routes' });
+//     }
+// });
+
+// router.use('/', routeService.getRouter());
+
+// export default router;
+
+
+
+
+// // server/routes/dynamicRoutes.js - Your existing + QR flow handler
+// import express from 'express';
+// import { generateQRCode } from '../controllers/services/qrController.js';  // Your existing
+
+// const router = express.Router();
+
+// // Your existing dynamic route creation
+// router.post('/create-route', async (req, res) => {
+//     const { path, methods } = req.body;
+//     // ... your existing logic to create dynamic routes
+
+//     // For QR flow, auto-mount if path === '/qr'
+//     if (path === '/qr' && methods.includes('POST')) {
+//         router.post('/qr', generateQRCode);  // Mount your QR handler
+//     }
+
+//     res.json({ success: true, routes: [] });  // Your response
+// });
+
+// router.get('/routes', (req, res) => {
+//     // Return current routes including /qr
+//     res.json({ routes: [{ path: '/qr', methods: ['POST'] }] });
+// });
+
+// export default router;
+
+
+
+
+// // server/routes/dynamicRoutes.js
+// import express from 'express';
+// import routeService from '../services/routeService.js';
+
+// const router = express.Router();
+
+// // ✅ Create new dynamic route
+// router.post('/create-route', async (req, res) => {
+//     try {
+//         const { path, methods, serviceType } = req.body;
+//         const result = await routeService.registerRoute(path, methods, serviceType);
+//         res.json({ success: true, route: result });
+//     } catch (error) {
+//         res.status(400).json({ success: false, message: error.message });
+//     }
+// });
+
+// // ✅ Get all existing routes
+// router.get('/routes', async (req, res) => {
+//     try {
+//         const routes = await routeService.getRoutes();
+//         res.json(routes);
+//     } catch (error) {
+//         res.status(500).json({ success: false, message: error.message });
+//     }
+// });
+
+// export default router;
+
+
+
+// server/routes/dynamicRoutes.js
+import express from "express";
+import routeService from "../services/routeService.js";
 
 const router = express.Router();
 
-router.post('/create-route', async (req, res) => {
-    const { path, methods } = req.body;
-    if (!path || !methods || !Array.isArray(methods) || methods.length === 0) {
-        return res.status(400).json({ error: 'Path and at least one method are required' });
-    }
+// ✅ Create a new dynamic route
+router.post("/create-route", async (req, res) => {
     try {
-        const result = await routeService.registerRoute(path, methods);
-        res.json(result);
+        const { path, methods, serviceType, inputSchema, outputSpec } = req.body;
+
+        const result = await routeService.registerRoute(
+            path,
+            methods,
+            serviceType,
+            inputSchema || [],
+            outputSpec || {}
+        );
+
+        res.json({ success: true, route: result });
     } catch (error) {
-        console.error('Error in /create-route:', error.message);
-        res.status(400).json({ error: error.message });
+        console.error("❌ Error creating route:", error.message);
+        res.status(400).json({ success: false, message: error.message });
     }
 });
 
-router.get('/routes', async (req, res) => {
+// ✅ Get all existing routes
+router.get("/routes", async (req, res) => {
     try {
         const routes = await routeService.getRoutes();
         res.json(routes);
     } catch (error) {
-        console.error('Error in /routes:', error.message);
-        res.status(500).json({ error: 'Failed to fetch routes' });
+        console.error("❌ Error fetching routes:", error.message);
+        res.status(500).json({ success: false, message: error.message });
     }
 });
-
-router.use('/', routeService.getRouter());
 
 export default router;

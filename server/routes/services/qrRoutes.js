@@ -1,3 +1,5 @@
+// server/routes/services/qrRoutes.js
+
 import express from 'express';
 import { generateQRCode, getQRStats } from '../../controllers/services/qrController.js';
 

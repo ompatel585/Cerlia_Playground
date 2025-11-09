@@ -62,6 +62,9 @@
 // });
 
 
+
+
+// server/server.js
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -80,6 +83,7 @@ import authRoutes from './routes/authRoutes.js';
 import qrRoutes from './routes/services/qrRoutes.js'
 import './config/passport.js';
 import sessionConfig from './config/session.js';
+import routeService from './services/routeService.js'; // 👈 add this line
 
 dotenv.config();
 connectDB();
@@ -88,10 +92,22 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middlewares
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "http://localhost:5174"
+];
+
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
+
 app.use(bodyParser.json());
 
 // Sessions & Passport
@@ -104,6 +120,8 @@ app.use('/api', dynamicRoutes);
 app.use('/api/auth', authRoutes);
 
 app.use('/api/qr', qrRoutes);
+
+app.use(routeService.getRouter());
 
 // Start server
 app.listen(port, () => {

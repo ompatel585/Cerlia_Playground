@@ -31,7 +31,7 @@
 //     User.findById(id).then((user) => done(null, user));
 // });
 
-
+//server/config/passport.js
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 

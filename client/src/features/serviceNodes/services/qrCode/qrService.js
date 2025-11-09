@@ -1,5 +1,5 @@
 // Updated to call YOUR backend instead of client-side generation
-
+// client/src/features/serviceNodes/services/qrCode/qrService.js
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
 /**
@@ -8,30 +8,47 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000
  * @param {object} options - QR options (format, size, scale)
  * @returns {Promise<string|null>} - Base64 QR code or null
  */
-export const generateQRCode = async (text, options = {}) => {
+// export const generateQRCode = async (text, options = {}) => {
+//     try {
+//         const response = await fetch(`${API_BASE_URL}/api/qr/generate`, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({
+//                 data: text,
+//                 format: options.format || 'png',
+//                 size: options.size || 300,
+//                 scale: options.scale || 4
+//             })
+//         });
+
+//         if (!response.ok) {
+//             const errorData = await response.json();
+//             console.error('QR Generation failed:', errorData);
+//             return null;
+//         }
+
+//         const result = await response.json();
+//         return result.data.qrCode;
+
+//     } catch (err) {
+//         console.error('QR Code generation error:', err);
+//         return null;
+//     }
+// };
+
+
+export const generateQRCode = async (text, options = {}, endpoint = '/qr') => {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/qr/generate`, {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                data: text,
-                format: options.format || 'png',
-                size: options.size || 300,
-                scale: options.scale || 4
-            })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ data: text, ...options }),
         });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error('QR Generation failed:', errorData);
-            return null;
-        }
-
+        if (!response.ok) throw new Error('Failed to generate QR code');
         const result = await response.json();
-        return result.data.qrCode;
-
+        return result.data?.qrCode || null;
     } catch (err) {
         console.error('QR Code generation error:', err);
         return null;
