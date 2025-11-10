@@ -74,7 +74,7 @@ import { Handle, Position } from "@xyflow/react";
 const OutputNode = ({ data = {} }) => {
   const flowData = data.flowData || {};
   const endpoint = flowData.endpoint || "/";
-  const baseUrl = "http://localhost:5000"; // Dynamic later
+  const baseUrl = ""; // Dynamic later
 
   return (
     <div className="relative flex flex-col gap-3 p-4 bg-gradient-to-b from-green-50 to-white border-2 border-green-400 rounded-xl shadow-md w-[260px]">
