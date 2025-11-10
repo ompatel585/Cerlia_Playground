@@ -188,7 +188,7 @@ export const createNode = (id, x, y, label, type = null, opts = {}) => ({
 const EndpointNode = ({ data }) => {
   const endpoint = data?.endpoint || "/";
   const method = data?.method || "POST";
-  const baseUrl = data?.baseUrl || "http://localhost:5000";
+  const baseUrl = data?.baseUrl || "";
   
   return (
     <div className="bg-blue-50 border-2 border-blue-400 rounded-lg p-4 w-[260px]">
@@ -211,7 +211,7 @@ const EndpointNode = ({ data }) => {
 
 export const initialNodes = [
   createNode("endpoint", 0, 0, "REST API", "endpointNode", {
-    data: { endpoint: "/", method: "POST", baseUrl: "http://localhost:5000" },
+    data: { endpoint: "/", method: "POST", baseUrl: "" },
   }),
   createNode("schema", 0, 140, "Input Schema", "schemaNode", {
     data: { inputs: [] },
