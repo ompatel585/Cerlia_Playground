@@ -415,7 +415,7 @@ export const useFlowLogic = () => {
                   ...n.data,
                   endpoint: path,
                   method: methods[0], // Use first method
-                  baseUrl: "http://localhost:5000", // Will be dynamic in prod
+                  baseUrl: "", // Will be dynamic in prod
                 },
               }
             : n
