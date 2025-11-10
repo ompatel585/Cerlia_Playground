@@ -1,13 +1,10 @@
 // api/index.js
 import serverless from "serverless-http";
-import app from "../server/server.js";     // your Express app
-import connectDB from "../server/config/db.js";  // your Mongo connection
+import app from "../server/server.js";
+import connectDB from "../server/config/db.js";
 
-// Wrap the Express app for Vercel serverless
-const handler = async (req, res) => {
-  // ensure Mongo is connected for every invocation
-  await connectDB();
-  return serverless(app)(req, res);
-};
+// Connect to Mongo once at cold start
+await connectDB();
 
-export default handler;
+// Export wrapped Express app
+export default serverless(app);
