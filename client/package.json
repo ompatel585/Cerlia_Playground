@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "preinstall": "npm install --legacy-peer-deps || true",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
