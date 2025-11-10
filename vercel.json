@@ -1,7 +1,6 @@
 {
   "functions": {
     "api/**/*.js": {
-      "includeFiles": "server/**",
       "runtime": "nodejs22.x"
     }
   },
@@ -14,7 +13,7 @@
       }
     },
     {
-      "src": "api/**/*.js",
+      "src": "api/index.js",
       "use": "@vercel/node"
     }
   ],
@@ -25,7 +24,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/client/dist/$1"
     }
   ]
 }
