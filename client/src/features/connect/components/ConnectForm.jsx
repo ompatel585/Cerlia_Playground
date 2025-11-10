@@ -19,7 +19,7 @@ const ConnectForm = ({ setRoutes }) => {
   useEffect(() => {
     const fetchExistingRoutes = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/routes");
+        const response = await fetch("/api/routes");
         if (!response.ok) throw new Error("Failed to fetch routes");
         const data = await response.json();
         setRoutes(data); // Set routes array directly
