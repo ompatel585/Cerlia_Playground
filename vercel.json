@@ -1,4 +1,10 @@
 {
+  "functions": {
+    "api/**/*.js": {
+      "includeFiles": "server/**",
+      "runtime": "nodejs22.x"
+    }
+  },
   "builds": [
     {
       "src": "client/package.json",
@@ -8,18 +14,18 @@
       }
     },
     {
-      "src": "api/index.js",
+      "src": "api/**/*.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/index.js"
+      "dest": "/api/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "client/dist/$1"
+      "dest": "/index.html"
     }
   ]
 }
