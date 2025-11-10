@@ -20,7 +20,7 @@
     "lucide-react": "^0.533.0",
     "qrcode": "^1.5.4",
     "react": "^19.1.0",
-    "react-custom-scrollbars": "^4.2.1",
+    "react-custom-scrollbars-2": "^4.5.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.7.0",
     "scrollbar": "^0.1.12",
