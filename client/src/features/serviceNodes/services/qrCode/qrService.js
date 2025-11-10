@@ -1,6 +1,6 @@
 // Updated to call YOUR backend instead of client-side generation
 // client/src/features/serviceNodes/services/qrCode/qrService.js
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 /**
  * Generate QR code via YOUR backend BaaS
