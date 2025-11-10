@@ -33,7 +33,7 @@ import { LogIn } from "lucide-react"; // Keeping this import, though not used in
 const Login = () => {
   const handleGoogleLogin = () => {
     // Ensure this URL is correct for your backend
-    window.open("http://localhost:5000/api/auth/google", "_self");
+    window.open("/api/auth/google", "_self");
   };
 
   return (
