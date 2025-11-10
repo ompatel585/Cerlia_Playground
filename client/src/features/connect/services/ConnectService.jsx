@@ -60,7 +60,7 @@ export const createRoute = async (path, methods) => {
     outputSpec: { statusCode: 200 },
   };
 
-  const res = await fetch("http://localhost:5000/api/create-route", {
+  const res = await fetch("/create-route", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),        // ✅ valid JSON string
@@ -72,7 +72,7 @@ export const createRoute = async (path, methods) => {
   }
 
   // reload routes
-  const routesRes = await fetch("http://localhost:5000/api/routes");
+  const routesRes = await fetch("/api/routes");
   const routes = await routesRes.json();
   return routes;
 };
