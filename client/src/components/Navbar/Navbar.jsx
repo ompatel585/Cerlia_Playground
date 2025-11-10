@@ -7,7 +7,7 @@ const Navbar = () => {
   const { user } = useAuth();
 
   const handleLogout = () => {
-    window.open("http://localhost:5000/api/auth/logout", "_self");
+    window.open("/api/auth/logout", "_self");
   };
 
   const initial = user?.name?.[0]?.toUpperCase() || "?";
