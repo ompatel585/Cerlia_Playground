@@ -32,10 +32,10 @@ const App = () => {
             <Route
               path="/"
               element={
-                <ProtectedRoute>
+                {/* <ProtectedRoute> */}
                   <RestTriggers />
                   {/* <FlowBuilder /> */}
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
           </Routes>
