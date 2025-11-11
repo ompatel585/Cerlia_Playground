@@ -31,13 +31,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route
               path="/"
-              element={
-                {/* <ProtectedRoute> */}
-                  <RestTriggers />
-                  {/* <FlowBuilder /> */}
-                // </ProtectedRoute>
-              }
-            />
+              element={<RestTriggers />}/>
           </Routes>
         </Router>
       </AuthProvider>
