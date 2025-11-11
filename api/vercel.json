@@ -1,13 +1,14 @@
 {
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": "",
+  "installCommand": "cd ../server && npm install",
   "functions": {
-    "api/index.js": {
+    "index.js": {
       "runtime": "nodejs20.x"
     }
   },
   "routes": [
-    { "src": "/api/(.*)", "dest": "api/index.js" }
-  ],
-  "framework": null,
-  "buildCommand": "",
-  "outputDirectory": ""
+    { "src": "/(.*)", "dest": "index.js" }
+  ]
 }
