@@ -31,10 +31,25 @@ import React from "react";
 import { LogIn } from "lucide-react"; // Keeping this import, though not used in the final button
 
 const Login = () => {
+  // const handleGoogleLogin = () => {
+  //   // Ensure this URL is correct for your backend
+  //   window.open("https://cerlia-playground.vercel.app/api/auth/google", "_self");
+  // };
+
   const handleGoogleLogin = () => {
-    // Ensure this URL is correct for your backend
-    window.open("https://cerlia-playground.vercel.app/api/auth/google", "_self");
-  };
+  const isLocal = window.location.hostname === "localhost";
+
+  if (isLocal) {
+    // Works locally, connects to your backend
+    window.open("http://localhost:5000/api/auth/google", "_self");
+  } else {
+    // Frontend only mode (on Vercel)
+    alert("⚠️ Backend not deployed yet. Google login disabled for now.");
+    // Optional: simulate login UI
+    // window.location.href = "/dashboard"; 
+  }
+};
+
 
   return (
     // Main container with a deeper, more vibrant gradient background
