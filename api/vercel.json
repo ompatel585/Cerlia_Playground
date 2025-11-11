@@ -1,13 +1,8 @@
 {
-  "functions": {
-    "index.js": {
-      "runtime": "nodejs20.x"
-    }
-  },
-  "routes": [
-    { "src": "/(.*)", "dest": "index.js" }
-  ],
-  "framework": null,
   "buildCommand": "",
-  "outputDirectory": ""
+  "outputDirectory": "",
+  "framework": null,
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.js" }
+  ]
 }
