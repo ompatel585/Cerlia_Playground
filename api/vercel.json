@@ -1,8 +1,13 @@
 {
-  "buildCommand": "",
-  "outputDirectory": "",
+  "functions": {
+    "index.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "routes": [
+    { "src": "/(.*)", "dest": "index.js" }
+  ],
   "framework": null,
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.js" }
-  ]
+  "buildCommand": "",
+  "outputDirectory": ""
 }
