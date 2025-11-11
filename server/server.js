@@ -116,10 +116,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('/api', dynamicRoutes);
-app.use('/api/auth', authRoutes);
+app.use('', dynamicRoutes);
+app.use('/auth', authRoutes);
 
-app.use('/api/qr', qrRoutes);
+app.use('/qr', qrRoutes);
 
 app.use(routeService.getRouter());
 
