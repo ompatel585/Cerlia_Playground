@@ -33,7 +33,7 @@ import { LogIn } from "lucide-react"; // Keeping this import, though not used in
 const Login = () => {
   const handleGoogleLogin = () => {
     // Ensure this URL is correct for your backend
-    window.open("/api/auth/google", "_self");
+    window.open("https://cerlia-playground.vercel.app/api/auth/google", "_self");
   };
 
   return (
