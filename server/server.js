@@ -86,7 +86,7 @@ import sessionConfig from './config/session.js';
 import routeService from './services/routeService.js'; // 👈 add this line
 
 dotenv.config();
-connectDB();
+// connectDB();
 
 const app = express();
 const port = process.env.PORT || 5000;
