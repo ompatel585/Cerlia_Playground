@@ -1,14 +1,12 @@
-
-
 {
   "functions": {
     "index.js": {
       "runtime": "nodejs20.x"
     }
   },
-  "installCommand": "cd ../server && npm install",
-  "buildCommand": "",
   "routes": [
     { "src": "/api/(.*)", "dest": "index.js" }
-  ]
+  ],
+  "installCommand": "cd ../server && npm install",
+  "buildCommand": ""
 }
