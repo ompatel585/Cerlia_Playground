@@ -19,6 +19,5 @@
       "src": "/(.*)",
       "dest": "/client/dist/$1"
     }
-  ],
-  "outputDirectory": "client/dist"
+  ]
 }
