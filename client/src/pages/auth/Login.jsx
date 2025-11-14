@@ -34,7 +34,11 @@ const Login = () => {
   const handleGoogleLogin = () => {
     // Ensure this URL is correct for your backend
     // window.open("https://cerlia-playground.vercel.app/api/auth/google", "_self");
-    window.open("https://cerlia-playground-full.vercel.app/api/auth/google", "_self");
+    // window.open("https://cerlia-playground-full.vercel.app/api/auth/google", "_self");
+   
+  window.open("https://cerlia-playground.onrender.com/auth/google", "_self");
+
+
 
   };
 
