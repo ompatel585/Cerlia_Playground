@@ -1,6 +1,7 @@
 //server/config/session.js
 import session from 'express-session';
 
+
 const sessionConfig = session({
     secret: process.env.SESSION_SECRET,
     resave: false,
