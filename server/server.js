@@ -127,8 +127,8 @@ app.use('/qr', qrRoutes);
 app.use(routeService.getRouter());
 
 // Start server
-// app.listen(port, () => {
-//   console.log(`🚀 Server running on http://localhost:${port}`);
-// });
-export default app;
+app.listen(port, () => {
+  console.log(`🚀 Server running on http://localhost:${port}`);
+});
+// export default app;
 
