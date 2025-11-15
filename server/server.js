@@ -165,12 +165,24 @@ const app = express();
 app.set("trust proxy", true);
 
 // ⭐ FIXED CORS — NO ARRAY (arrays break credentials)
+// app.use(
+//   cors({
+//     origin: "https://cerlia-playground-frontend.onrender.com",
+//     credentials: true,
+//   })
+// );
+
 app.use(
   cors({
-    origin: "https://cerlia-playground-frontend.onrender.com",
+    origin: [
+      "https://cerlia-playground-frontend.onrender.com",
+      "https://cerlia-playground.onrender.com",
+      "http://localhost:5173"
+    ],
     credentials: true,
   })
 );
+
 
 app.use(bodyParser.json());
 
