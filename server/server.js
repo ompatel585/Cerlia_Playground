@@ -141,63 +141,51 @@
 
 
 
-
-
 // server/server.js
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import passport from 'passport';
-import dotenv from 'dotenv';
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import passport from "passport";
+import dotenv from "dotenv";
 
-import connectDB from './config/db.js';
-import dynamicRoutes from './routes/dynamicRoutes.js';
-import authRoutes from './routes/authRoutes.js';
-import qrRoutes from './routes/services/qrRoutes.js'
-import './config/passport.js';
-import sessionConfig from './config/session.js';
-import routeService from './services/routeService.js';
+import connectDB from "./config/db.js";
+import dynamicRoutes from "./routes/dynamicRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import qrRoutes from "./routes/services/qrRoutes.js";
+import "./config/passport.js";
+import sessionConfig from "./config/session.js";
+import routeService from "./services/routeService.js";
 
 dotenv.config();
 connectDB();
 
 const app = express();
 
-// 🔥 THIS IS REQUIRED ON RENDER (correct version)
+// ⭐ MUST BE BEFORE SESSION — REQUIRED FOR SECURE COOKIES ON RENDER
 app.set("trust proxy", true);
 
-const port = process.env.PORT || 5000;
-
-// --------------------------------------
-// 🔥 FIXED CORS (EXPRESS ALLOWS EXACT FRONTEND DOMAIN)
-// --------------------------------------
+// ⭐ FIXED CORS — NO ARRAY (arrays break credentials)
 app.use(
   cors({
-    origin: [
-      "https://cerlia-playground-frontend.onrender.com",
-      "http://localhost:5173",
-      "http://localhost:5174"
-    ],
+    origin: "https://cerlia-playground-frontend.onrender.com",
     credentials: true,
   })
 );
 
-// --------------------------------------
-
 app.use(bodyParser.json());
 
-// Sessions + Passport
+// ⭐ SESSION MUST COME AFTER trust proxy + CORS
 app.use(sessionConfig);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('', dynamicRoutes);
-app.use('/auth', authRoutes);
-app.use('/qr', qrRoutes);
+app.use("", dynamicRoutes);
+app.use("/auth", authRoutes);
+app.use("/qr", qrRoutes);
 app.use(routeService.getRouter());
 
-app.listen(port, () => {
-  console.log(`🚀 Server running on port ${port}`);
+app.listen(process.env.PORT || 5000, () => {
+  console.log("🚀 Server running");
 });
-
