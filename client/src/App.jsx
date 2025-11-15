@@ -42,7 +42,6 @@ const App = () => {
              <Route
               path="/"
               element={
-               <ProtectedRoute> 
                    <FlowBuilder /> 
               }
             />
