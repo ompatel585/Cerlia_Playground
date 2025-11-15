@@ -86,6 +86,7 @@ dotenv.config();
 connectDB();
 
 const app = express();
+app.set("trust proxy", 1); // 🔥 REQUIRED for Secure Cookies on Render
 const port = process.env.PORT || 5000;
 
 // Middlewares
