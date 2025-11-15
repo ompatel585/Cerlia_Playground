@@ -61,6 +61,88 @@
 
 
 
+// // server/server.js
+// import express from 'express';
+// import cors from 'cors';
+// import bodyParser from 'body-parser';
+// import passport from 'passport';
+// import dotenv from 'dotenv';
+
+
+
+
+
+// import connectDB from './config/db.js';
+// // import sessionConfig from './config/session.js';
+
+// import dynamicRoutes from './routes/dynamicRoutes.js';
+// import authRoutes from './routes/authRoutes.js';
+// import qrRoutes from './routes/services/qrRoutes.js'
+// import './config/passport.js';
+// import sessionConfig from './config/session.js';
+// import routeService from './services/routeService.js'; // 👈 add this line
+
+// dotenv.config();
+// connectDB();
+
+// const app = express();
+// app.set("trust proxy", 1); // 🔥 REQUIRED for Secure Cookies on Render
+// const port = process.env.PORT || 5000;
+
+// // Middlewares
+// const allowedOrigins = [
+//   process.env.CLIENT_URL,
+//   "http://localhost:5174"
+// ];
+
+// // app.use(cors({
+// //   origin: function (origin, callback) {
+// //     if (!origin || allowedOrigins.includes(origin)) {
+// //       callback(null, true);
+// //     } else {
+// //       callback(new Error("Not allowed by CORS"));
+// //     }
+// //   },
+// //   credentials: true,
+// // }));
+
+// // app.use(cors({
+// //   origin: true,
+// //   credentials: true
+// // }));
+
+// app.use(cors({
+//   origin: process.env.CLIENT_URL,
+//   credentials: true,
+// }));
+
+
+// app.use(bodyParser.json());
+
+// // Sessions & Passport
+// app.use(sessionConfig);
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// // Routes
+// app.use('', dynamicRoutes);
+// app.use('/auth', authRoutes);
+
+// app.use('/qr', qrRoutes);
+
+// app.use(routeService.getRouter());
+
+// // Start server
+// app.listen(port, () => {
+//   console.log(`🚀 Server running on http://localhost:${port}`);
+// });
+// // export default app;
+
+
+
+
+
+
 // server/server.js
 import express from 'express';
 import cors from 'cors';
@@ -68,58 +150,43 @@ import bodyParser from 'body-parser';
 import passport from 'passport';
 import dotenv from 'dotenv';
 
-
-
-
-
 import connectDB from './config/db.js';
-// import sessionConfig from './config/session.js';
-
 import dynamicRoutes from './routes/dynamicRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import qrRoutes from './routes/services/qrRoutes.js'
 import './config/passport.js';
 import sessionConfig from './config/session.js';
-import routeService from './services/routeService.js'; // 👈 add this line
+import routeService from './services/routeService.js';
 
 dotenv.config();
 connectDB();
 
 const app = express();
-app.set("trust proxy", 1); // 🔥 REQUIRED for Secure Cookies on Render
+
+// 🔥 THIS IS REQUIRED ON RENDER (correct version)
+app.set("trust proxy", true);
+
 const port = process.env.PORT || 5000;
 
-// Middlewares
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  "http://localhost:5174"
-];
+// --------------------------------------
+// 🔥 FIXED CORS (EXPRESS ALLOWS EXACT FRONTEND DOMAIN)
+// --------------------------------------
+app.use(
+  cors({
+    origin: [
+      "https://cerlia-playground-frontend.onrender.com",
+      "http://localhost:5173",
+      "http://localhost:5174"
+    ],
+    credentials: true,
+  })
+);
 
-// app.use(cors({
-//   origin: function (origin, callback) {
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"));
-//     }
-//   },
-//   credentials: true,
-// }));
-
-// app.use(cors({
-//   origin: true,
-//   credentials: true
-// }));
-
-app.use(cors({
-  origin: process.env.CLIENT_URL,
-  credentials: true,
-}));
-
+// --------------------------------------
 
 app.use(bodyParser.json());
 
-// Sessions & Passport
+// Sessions + Passport
 app.use(sessionConfig);
 app.use(passport.initialize());
 app.use(passport.session());
@@ -127,14 +194,10 @@ app.use(passport.session());
 // Routes
 app.use('', dynamicRoutes);
 app.use('/auth', authRoutes);
-
 app.use('/qr', qrRoutes);
-
 app.use(routeService.getRouter());
 
-// Start server
 app.listen(port, () => {
-  console.log(`🚀 Server running on http://localhost:${port}`);
+  console.log(`🚀 Server running on port ${port}`);
 });
-// export default app;
 
