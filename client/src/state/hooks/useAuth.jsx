@@ -9,10 +9,17 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const fetchUser = async () => {
-    try {
-      const { data } = await axios.get("/api/auth/me", {
-        withCredentials: true,
-      });
+    // try {
+    //   const { data } = await axios.get("/api/auth/me", {
+    //     withCredentials: true,
+    //   });
+    try{
+      const {data } = await axios.get(
+  `${import.meta.env.VITE_SERVER_URL}/auth/me`,
+  { withCredentials: true }
+   });
+
+ 
       setUser(data);
     } catch (err) {
       setUser(null);
