@@ -105,9 +105,14 @@ const allowedOrigins = [
 //   credentials: true,
 // }));
 
+// app.use(cors({
+//   origin: true,
+//   credentials: true
+// }));
+
 app.use(cors({
-  origin: true,
-  credentials: true
+  origin: process.env.CLIENT_URL,
+  credentials: true,
 }));
 
 
