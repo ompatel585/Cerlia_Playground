@@ -25,20 +25,13 @@ const sessionConfig = session({
   resave: false,
   saveUninitialized: false,
   rolling: true,
-  // cookie: {
-  //   maxAge: 6 * 60 * 60 * 1000, // 6 hours
-  //   secure: true,               // must be true in production with HTTPS
-  //   httpOnly: true,
-  //   sameSite: "none",           // must be 'none' for cross-site cookies
-  // },
   cookie: {
-  maxAge: 6 * 60 * 60 * 1000,
-  secure: true,
-  httpOnly: true,
-  sameSite: "none",
-  domain: "cerlia-playground.onrender.com"
-}
-,
+    maxAge: 6 * 60 * 60 * 1000, // 6 hours
+    secure: true,               // must be true in production with HTTPS
+    httpOnly: true,
+    sameSite: "none",           // must be 'none' for cross-site cookies
+  },
+ 
 });
 
 export default sessionConfig;
