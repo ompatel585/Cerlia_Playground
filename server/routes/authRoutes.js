@@ -38,13 +38,23 @@ router.get(
     passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
+// router.get(
+//     "/google/callback",
+//     passport.authenticate("google", {
+//         successRedirect: process.env.CLIENT_URL,
+//         failureRedirect: "/login/failed",
+//     })
+// );
+
 router.get(
-    "/google/callback",
-    passport.authenticate("google", {
-        successRedirect: process.env.CLIENT_URL,
-        failureRedirect: "/login/failed",
-    })
+  "/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login/failed" }),
+  (req, res) => {
+    // ⭐ At this point the session is created and the Set-Cookie header is sent
+    res.redirect(process.env.CLIENT_URL);
+  }
 );
+
 
 router.get("/me", getUser);
 router.get("/logout", logout);
