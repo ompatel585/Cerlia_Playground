@@ -29,7 +29,7 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
-            {/* <Route
+              <Route
               path="/"
               element={
                <ProtectedRoute> 
@@ -38,13 +38,8 @@ const App = () => {
                  </ProtectedRoute>
               }
             />
-          </Routes> */}
-             <Route
-              path="/"
-              element={
-                   <FlowBuilder /> 
-              }
-            />
+         
+            
           </Routes>
         </Router>
       </AuthProvider>
