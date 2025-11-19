@@ -49,9 +49,39 @@
 
 
 
-// client/src/features/connect/services/ConnectService.jsx
+// // client/src/features/connect/services/ConnectService.jsx
+// export const createRoute = async (path, methods) => {
+//   // always build a real object; never send a raw string
+//   const payload = {
+//     path: path.startsWith("/") ? path : `/${path}`,
+//     methods: Array.isArray(methods) ? methods : [methods],
+//     serviceType: "qr-generator",
+//     inputSchema: [{ name: "data", type: "string", required: true }],
+//     outputSpec: { statusCode: 200 },
+//   };
+
+//   const res = await fetch("/create-route", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(payload),        // ✅ valid JSON string
+//   });
+
+//   const data = await res.json().catch(() => ({}));
+//   if (!res.ok) {
+//     throw new Error(data.message || `Failed (${res.status})`);
+//   }
+
+//   // reload routes
+//   const routesRes = await fetch("/api/routes");
+//   const routes = await routesRes.json();
+//   return routes;
+// };
+
+
+
+const BASE_URL = "https://cerlia-playground.onrender.com";
+
 export const createRoute = async (path, methods) => {
-  // always build a real object; never send a raw string
   const payload = {
     path: path.startsWith("/") ? path : `/${path}`,
     methods: Array.isArray(methods) ? methods : [methods],
@@ -60,10 +90,11 @@ export const createRoute = async (path, methods) => {
     outputSpec: { statusCode: 200 },
   };
 
-  const res = await fetch("/create-route", {
+  // CREATE ROUTE
+  const res = await fetch(`${BASE_URL}/create-route`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),        // ✅ valid JSON string
+    body: JSON.stringify(payload),
   });
 
   const data = await res.json().catch(() => ({}));
@@ -71,8 +102,9 @@ export const createRoute = async (path, methods) => {
     throw new Error(data.message || `Failed (${res.status})`);
   }
 
-  // reload routes
-  const routesRes = await fetch("/api/routes");
+  // FETCH ALL ROUTES
+  const routesRes = await fetch(`${BASE_URL}/api/routes`);
   const routes = await routesRes.json();
+
   return routes;
 };
