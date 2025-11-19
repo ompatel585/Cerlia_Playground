@@ -103,7 +103,7 @@ export const createRoute = async (path, methods) => {
   }
 
   // FETCH ALL ROUTES
-  const routesRes = await fetch(`${BASE_URL}/api/routes`);
+  const routesRes = await fetch(`${BASE_URL}/routes`);
   const routes = await routesRes.json();
 
   return routes;

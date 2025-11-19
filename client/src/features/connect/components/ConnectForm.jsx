@@ -21,7 +21,7 @@ const ConnectForm = ({ setRoutes }) => {
       try {
         // const response = await fetch("/api/routes");
         const response = await fetch(
-          "https://cerlia-playground.onrender.com/api/routes"
+          "https://cerlia-playground.onrender.com/routes"
         );
 
         if (!response.ok) throw new Error("Failed to fetch routes");
