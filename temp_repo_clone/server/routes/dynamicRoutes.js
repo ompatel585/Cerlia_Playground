@@ -313,114 +313,37 @@
 
 
 
-// // server/routes/dynamicRoutes.js
-// import express from "express";
-// import routeService from "../services/routeService.js";
-
-// const router = express.Router();
-
-// // ✅ Create a new dynamic route
-// // router.post("/create-route", async (req, res) => {
-// //     try {
-// //         const { path, methods, serviceType, inputSchema, outputSpec } = req.body;
-
-// //         const result = await routeService.registerRoute(
-// //             path,
-// //             methods,
-// //             serviceType,
-// //             inputSchema || [],
-// //             outputSpec || {}
-// //         );
-
-// //         res.json({ success: true, route: result });
-// //     } catch (error) {
-// //         console.error("❌ Error creating route:", error.message);
-// //         res.status(400).json({ success: false, message: error.message });
-// //     }
-// // });
-
-// router.post("/create-route", async (req, res) => {
-//     const { path, methods, userId, workflowId } = req.body;
-
-//     const fullPath = `/${userId}-${workflowId}${path}`;
-
-//     await routeService.registerRoute(fullPath, methods);
-
-//     res.json({
-//         success: true,
-//         endpoint: fullPath
-//     });
-// });
-
-
-// // ✅ Get all existing routes
-// router.get("/routes", async (req, res) => {
-//     try {
-//         const routes = await routeService.getRoutes();
-//         res.json(routes);
-//     } catch (error) {
-//         console.error("❌ Error fetching routes:", error.message);
-//         res.status(500).json({ success: false, message: error.message });
-//     }
-// });
-
-// export default router;
-
-
-
 // server/routes/dynamicRoutes.js
 import express from "express";
 import routeService from "../services/routeService.js";
 
 const router = express.Router();
 
+// ✅ Create a new dynamic route
 router.post("/create-route", async (req, res) => {
     try {
-        const {
-            path = "/",
-            methods = ["POST"],
-            userId,
-            workflowId,
-            serviceType = null,
-            inputSchema = [],
-            outputSpec = {},
-        } = req.body;
+        const { path, methods, serviceType, inputSchema, outputSpec } = req.body;
 
-        if (!userId || !workflowId) {
-            return res.status(400).json({ success: false, message: "userId and workflowId required" });
-        }
-
-        // Normalize path to start with slash
-        const userPath = path.startsWith("/") ? path : `/${path}`;
-
-        // Build unique path: /{userId}-{workflowId}{userPath}
-        const fullPath = `/${userId}-${workflowId}${userPath}`;
-
-        // Register route with service metadata so routeService can save serviceType / schemas
-        await routeService.registerRoute(fullPath, methods, serviceType, inputSchema, outputSpec);
-
-        // Build absolute URL using request host/proto (safer than relying on env)
-        const protocol = req.protocol;
-        const host = req.get("host"); // includes port if present
-        const absolute = `${protocol}://${host}${fullPath}`;
-
-        res.json({
-            success: true,
-            endpoint: absolute,
-            path: fullPath,
+        const result = await routeService.registerRoute(
+            path,
             methods,
-        });
+            serviceType,
+            inputSchema || [],
+            outputSpec || {}
+        );
+
+        res.json({ success: true, route: result });
     } catch (error) {
-        console.error("❌ Error creating route:", error);
+        console.error("❌ Error creating route:", error.message);
         res.status(400).json({ success: false, message: error.message });
     }
 });
 
-// Get all existing routes
+// ✅ Get all existing routes
 router.get("/routes", async (req, res) => {
     try {
         const routes = await routeService.getRoutes();
-        res.json({ success: true, routes });
+        res.json(routes);
     } catch (error) {
         console.error("❌ Error fetching routes:", error.message);
         res.status(500).json({ success: false, message: error.message });

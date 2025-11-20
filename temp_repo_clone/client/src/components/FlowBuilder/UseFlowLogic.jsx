@@ -352,269 +352,226 @@
 
 // client/src/components/FlowBuilder/UseFlowLogic.jsx
 
-  // client/src/components/FlowBuilder/UseFlowLogic.jsx
-  import { useState, useCallback, useEffect } from "react";
-  import {
-    applyNodeChanges,
-    applyEdgeChanges,
-    MarkerType,
-    Position,
-  } from "@xyflow/react";
-  import {
-    initialNodes,
-    initialEdges,
-    serviceCounter as baseServiceCounter,
-  } from "./NodeConfig.jsx";
+// client/src/components/FlowBuilder/UseFlowLogic.jsx
+import { useState, useCallback, useEffect } from "react";
+import {
+  applyNodeChanges,
+  applyEdgeChanges,
+  MarkerType,
+  Position,
+} from "@xyflow/react";
+import {
+  initialNodes,
+  initialEdges,
+  serviceCounter as baseServiceCounter,
+} from "./NodeConfig.jsx";
 
-  let serviceCounter = baseServiceCounter;
+let serviceCounter = baseServiceCounter;
 
-  export const useFlowLogic = () => {
-    const [nodes, setNodes] = useState(initialNodes);
-    const [edges, setEdges] = useState(initialEdges);
-    const [showConnect, setShowConnect] = useState(false);
-    const [flowData, setFlowData] = useState({
-      endpoint: "/",
-      method: "POST",
-      schemaInputs: [],
-      serviceConfig: {},
-    });
+export const useFlowLogic = () => {
+  const [nodes, setNodes] = useState(initialNodes);
+  const [edges, setEdges] = useState(initialEdges);
+  const [showConnect, setShowConnect] = useState(false);
+  const [flowData, setFlowData] = useState({
+    endpoint: "/",
+    method: "POST",
+    schemaInputs: [],
+    serviceConfig: {},
+  });
 
-    const onNodesChange = useCallback(
-      (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-      []
-    );
+  const onNodesChange = useCallback(
+    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    []
+  );
 
-    const onEdgesChange = useCallback(
-      (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-      []
-    );
+  const onEdgesChange = useCallback(
+    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    []
+  );
 
-    const onConnect = useCallback(() => {}, []);
+  const onConnect = useCallback(() => {}, []);
 
-    const handleNodeClick = (event, node) => {
-      if (node.id === "add-service") {
-        const openEvent = new CustomEvent("openServicePopup");
-        window.dispatchEvent(openEvent);
-      } else if (node.id === "endpoint") {
-        setShowConnect(true);
-      }
-    };
+  const handleNodeClick = (event, node) => {
+    if (node.id === "add-service") {
+      const openEvent = new CustomEvent("openServicePopup");
+      window.dispatchEvent(openEvent);
+    } else if (node.id === "endpoint") {
+      setShowConnect(true);
+    }
+  };
 
-    // Listen for Connect form submitting a route
-    useEffect(() => {
-      // const handleRouteCreated = (e) => {
-      //   const { path, methods } = e.detail;
-
-      //   // Update endpoint node with dynamic path
-      //   setNodes((nds) =>
-      //     nds.map((n) =>
-      //       n.id === "endpoint"
-      //         ? {
-      //             ...n,
-      //             data: {
-      //               ...n.data,
-      //               endpoint: path,
-      //               method: methods[0], // Use first method
-      //               baseUrl: "", // Will be dynamic in prod
-      //             },
-      //           }
-      //         : n
-      //     )
-      //   );
-
-      //   // Update flow data for backend calls
-      //   setFlowData((prev) => ({
-      //     ...prev,
-      //     endpoint: path,
-      //     method: methods[0],
-      //   }));
-
-      //   setShowConnect(false);
-      // };
-
-      // inside useEffect listening routeCreated
-      const handleRouteCreated = (e) => {
-        const { endpoint, path, methods, userId, workflowId } = e.detail;
-
-        // Use the full absolute endpoint returned by the server
-        setNodes((nds) =>
-          nds.map((n) =>
-            n.id === "endpoint"
-              ? {
-                  ...n,
-                  data: {
-                    ...n.data,
-                    endpoint: endpoint, // absolute URL
-                    method: methods[0],
-                    baseUrl: "", // not used now because endpoint is absolute
-                  },
-                }
-              : n
-          )
-        );
-
-        setFlowData((prev) => ({
-          ...prev,
-          endpoint: endpoint,
-          method: methods[0],
-          owner: userId,
-          workflowId,
-        }));
-
-        setShowConnect(false);
-      };
-
-      window.addEventListener("routeCreated", handleRouteCreated);
-      return () =>
-        window.removeEventListener("routeCreated", handleRouteCreated);
-    }, []);
-
-    // Listen for schema updates
-    useEffect(() => {
-      const handleSchemaUpdate = (e) => {
-        const { inputs } = e.detail;
-        setFlowData((prev) => ({ ...prev, schemaInputs: inputs }));
-      };
-
-      window.addEventListener("schemaUpdated", handleSchemaUpdate);
-      return () => window.removeEventListener("schemaUpdated", handleSchemaUpdate);
-    }, []);
-
-    // Handle dynamic height changes
-    useEffect(() => {
-      const handler = (e) => {
-        const { nodeId, diff } = e.detail;
-        if (Math.abs(diff) < 1) return;
-
-        setNodes((nds) =>
-          nds.map((n) => {
-            const changedNode = nds.find((nn) => nn.id === nodeId);
-            if (!changedNode || n.id === nodeId) return n;
-            if (n.position.y > changedNode.position.y) {
-              return { ...n, position: { ...n.position, y: n.position.y + diff } };
-            }
-            return n;
-          })
-        );
-      };
-
-      window.addEventListener("nodeHeightChange", handler);
-      return () => window.removeEventListener("nodeHeightChange", handler);
-    }, []);
-
-    const addServiceNode = (serviceId) => {
-      const sourceId = "add-service";
-      const outputId = "output";
-      const newServiceId = `service-${serviceCounter++}`;
-
-      // GENERIC service configs - add 100s here easily
-      const serviceConfig = {
-        "qr-generator": {
-          type: "qrNode",
-          label: "Generate QR Code",
-          config: { scale: 4, format: "png" },
-        },
-        // Future: "pdf-generator", "email-sender", "image-resize", etc.
-      };
-
-      const config = serviceConfig[serviceId];
-      if (!config) return;
-
-      const sourceNode = nodes.find((n) => n.id === sourceId);
-      const outputNode = nodes.find((n) => n.id === outputId);
-      if (!sourceNode || !outputNode) return;
-
-      const serviceY = sourceNode.position.y + 160;
-      const newOutputY = serviceY + 200;
-
-      const newNode = {
-        id: newServiceId,
-        type: config.type,
-        position: { x: sourceNode.position.x, y: serviceY },
-        data: {
-          label: config.label,
-          config: config.config,
-          flowData, // Pass endpoint + schema data
-        },
-        sourcePosition: Position.Bottom,
-        targetPosition: Position.Top,
-      };
-
-      setNodes((nds) => {
-        const updated = nds
-          .map((n) => {
-            if (n.id === outputId) {
-              return {
+  // Listen for Connect form submitting a route
+  useEffect(() => {
+    const handleRouteCreated = (e) => {
+      const { path, methods } = e.detail;
+      
+      // Update endpoint node with dynamic path
+      setNodes((nds) =>
+        nds.map((n) =>
+          n.id === "endpoint"
+            ? {
                 ...n,
-                position: { ...n.position, y: newOutputY },
-                data: { ...n.data, flowData }, // Pass to output
-              };
-            }
-            if (n.id === sourceId) {
-              return { ...n, data: { ...n.data, label: "✓ Service Added" } };
-            }
-            return n;
-          })
-          .filter((n) => n.id !== sourceId);
+                data: {
+                  ...n.data,
+                  endpoint: path,
+                  method: methods[0], // Use first method
+                  baseUrl: "", // Will be dynamic in prod
+                },
+              }
+            : n
+        )
+      );
 
-        return [...updated, newNode].sort((a, b) => a.position.y - b.position.y);
-      });
-
-      setEdges((eds) => {
-        let updated = eds.filter(
-          (e) => !(e.source === sourceId && e.target === outputId)
-        );
-        updated = updated.filter((e) => e.id !== "schema-add-service");
-
-        updated.push(
-          {
-            id: "schema-service",
-            source: "schema",
-            target: newServiceId,
-            type: "straight",
-            markerEnd: { type: MarkerType.ArrowClosed, color: "#FC0AEC" },
-            style: { stroke: "#FC0AEC", strokeWidth: 2 },
-          },
-          {
-            id: "service-output",
-            source: newServiceId,
-            target: outputId,
-            type: "straight",
-            markerEnd: { type: MarkerType.ArrowClosed, color: "#FC0AEC" },
-            style: { stroke: "#FC0AEC", strokeWidth: 2 },
-          }
-        );
-
-        return updated;
-      });
-
-      // Update flow config with service
+      // Update flow data for backend calls
       setFlowData((prev) => ({
         ...prev,
-        serviceConfig: config.config,
+        endpoint: path,
+        method: methods[0],
       }));
+
+      setShowConnect(false);
     };
 
-    useEffect(() => {
-      const handler = (e) => {
-        console.log("testService fired:", e.detail);
-      };
+    window.addEventListener("routeCreated", handleRouteCreated);
+    return () => window.removeEventListener("routeCreated", handleRouteCreated);
+  }, []);
 
-      window.addEventListener("testService", handler);
-      return () => window.removeEventListener("testService", handler);
-    }, []);
-
-
-    return {
-      nodes,
-      edges,
-      onNodesChange,
-      onEdgesChange,
-      onConnect,
-      handleNodeClick,
-      showConnect,
-      setShowConnect,
-      addServiceNode,
-      flowData, // Expose for backend calls
+  // Listen for schema updates
+  useEffect(() => {
+    const handleSchemaUpdate = (e) => {
+      const { inputs } = e.detail;
+      setFlowData((prev) => ({ ...prev, schemaInputs: inputs }));
     };
+
+    window.addEventListener("schemaUpdated", handleSchemaUpdate);
+    return () => window.removeEventListener("schemaUpdated", handleSchemaUpdate);
+  }, []);
+
+  // Handle dynamic height changes
+  useEffect(() => {
+    const handler = (e) => {
+      const { nodeId, diff } = e.detail;
+      if (Math.abs(diff) < 1) return;
+
+      setNodes((nds) =>
+        nds.map((n) => {
+          const changedNode = nds.find((nn) => nn.id === nodeId);
+          if (!changedNode || n.id === nodeId) return n;
+          if (n.position.y > changedNode.position.y) {
+            return { ...n, position: { ...n.position, y: n.position.y + diff } };
+          }
+          return n;
+        })
+      );
+    };
+
+    window.addEventListener("nodeHeightChange", handler);
+    return () => window.removeEventListener("nodeHeightChange", handler);
+  }, []);
+
+  const addServiceNode = (serviceId) => {
+    const sourceId = "add-service";
+    const outputId = "output";
+    const newServiceId = `service-${serviceCounter++}`;
+
+    // GENERIC service configs - add 100s here easily
+    const serviceConfig = {
+      "qr-generator": {
+        type: "qrNode",
+        label: "Generate QR Code",
+        config: { scale: 4, format: "png" },
+      },
+      // Future: "pdf-generator", "email-sender", "image-resize", etc.
+    };
+
+    const config = serviceConfig[serviceId];
+    if (!config) return;
+
+    const sourceNode = nodes.find((n) => n.id === sourceId);
+    const outputNode = nodes.find((n) => n.id === outputId);
+    if (!sourceNode || !outputNode) return;
+
+    const serviceY = sourceNode.position.y + 160;
+    const newOutputY = serviceY + 200;
+
+    const newNode = {
+      id: newServiceId,
+      type: config.type,
+      position: { x: sourceNode.position.x, y: serviceY },
+      data: {
+        label: config.label,
+        config: config.config,
+        flowData, // Pass endpoint + schema data
+      },
+      sourcePosition: Position.Bottom,
+      targetPosition: Position.Top,
+    };
+
+    setNodes((nds) => {
+      const updated = nds
+        .map((n) => {
+          if (n.id === outputId) {
+            return {
+              ...n,
+              position: { ...n.position, y: newOutputY },
+              data: { ...n.data, flowData }, // Pass to output
+            };
+          }
+          if (n.id === sourceId) {
+            return { ...n, data: { ...n.data, label: "✓ Service Added" } };
+          }
+          return n;
+        })
+        .filter((n) => n.id !== sourceId);
+
+      return [...updated, newNode].sort((a, b) => a.position.y - b.position.y);
+    });
+
+    setEdges((eds) => {
+      let updated = eds.filter(
+        (e) => !(e.source === sourceId && e.target === outputId)
+      );
+      updated = updated.filter((e) => e.id !== "schema-add-service");
+
+      updated.push(
+        {
+          id: "schema-service",
+          source: "schema",
+          target: newServiceId,
+          type: "straight",
+          markerEnd: { type: MarkerType.ArrowClosed, color: "#FC0AEC" },
+          style: { stroke: "#FC0AEC", strokeWidth: 2 },
+        },
+        {
+          id: "service-output",
+          source: newServiceId,
+          target: outputId,
+          type: "straight",
+          markerEnd: { type: MarkerType.ArrowClosed, color: "#FC0AEC" },
+          style: { stroke: "#FC0AEC", strokeWidth: 2 },
+        }
+      );
+
+      return updated;
+    });
+
+    // Update flow config with service
+    setFlowData((prev) => ({
+      ...prev,
+      serviceConfig: config.config,
+    }));
   };
+
+  return {
+    nodes,
+    edges,
+    onNodesChange,
+    onEdgesChange,
+    onConnect,
+    handleNodeClick,
+    showConnect,
+    setShowConnect,
+    addServiceNode,
+    flowData, // Expose for backend calls
+  };
+};

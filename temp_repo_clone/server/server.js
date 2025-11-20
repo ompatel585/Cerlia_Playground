@@ -177,8 +177,7 @@ app.use(
     origin: [
       "https://cerlia-playground-frontend.onrender.com",
       "https://cerlia-playground.onrender.com",
-      "http://localhost:5173",
-      "http://localhost:5174"   // ← ADD THIS
+      "http://localhost:5173"
     ],
     credentials: true,
   })

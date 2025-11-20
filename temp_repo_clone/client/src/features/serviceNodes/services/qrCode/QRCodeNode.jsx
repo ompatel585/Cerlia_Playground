@@ -199,276 +199,31 @@
 
 
 
-// // client/src/features/serviceNodes/services/qrCode/QRCodeNode.jsx
-// import React, { useState } from "react";
-// import { Handle, Position } from "@xyflow/react";
-
-// const QRCodeNode = ({ data = {} }) => {
-//   const [scale, setScale] = useState(data.config?.scale || 4);
-//   const [format, setFormat] = useState(data.config?.format || "png");
-  
-//   const flowData = data.flowData || {};
-//   const endpoint = flowData.endpoint || "/";
-//   const schemaInputs = flowData.schemaInputs || [];
-
-  
-  
-//   return (
-//     <div className="relative flex flex-col gap-3 p-4 bg-gradient-to-b from-purple-50 to-white border-2 border-purple-300 rounded-xl shadow-md w-[260px] hover:shadow-lg transition-all">
-//       <Handle type="target" position={Position.Top} className="!bg-purple-500 w-3 h-3" />
-//       <Handle type="source" position={Position.Bottom} className="!bg-purple-500 w-3 h-3" />
-
-//       <div className="flex items-center gap-2">
-//         <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-//         <h4 className="text-sm font-bold text-purple-800">Generate QR Code</h4>
-//       </div>
-
-//       {/* Shows input from schema */}
-//       <div className="bg-white p-2 rounded border border-purple-200 text-xs">
-//         <div className="text-gray-500 mb-1">← Inputs from Schema:</div>
-//         {schemaInputs.length > 0 ? (
-//           schemaInputs.map((inp, i) => (
-//             <div key={i} className="text-purple-700 font-mono text-[10px]">
-//               • {inp.name} ({inp.type})
-//             </div>
-//           ))
-//         ) : (
-//           <div className="text-gray-400 italic">No inputs defined</div>
-//         )}
-//       </div>
-
-//       {/* Service Config */}
-//       <div className="space-y-2">
-//         <label className="block text-xs text-gray-700 font-medium">Scale</label>
-//         <select
-//           value={scale}
-//           onChange={(e) => setScale(Number(e.target.value))}
-//           className="w-full px-2 py-1 text-xs border rounded focus:outline-none focus:ring-1 focus:ring-purple-500"
-//         >
-//           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((s) => (
-//             <option key={s} value={s}>
-//               {s}
-//             </option>
-//           ))}
-//         </select>
-
-//         <label className="block text-xs text-gray-700 font-medium">Format</label>
-//         <select
-//           value={format}
-//           onChange={(e) => setFormat(e.target.value)}
-//           className="w-full px-2 py-1 text-xs border rounded focus:outline-none focus:ring-1 focus:ring-purple-500"
-//         >
-//           <option value="png">PNG</option>
-//           <option value="svg">SVG</option>
-//           <option value="dataURL">Base64</option>
-//         </select>
-//       </div>
-
-//       {/* Output indicator */}
-//       <div className="bg-white p-2 rounded border border-dashed border-purple-300 text-xs">
-//         <div className="text-gray-500">→ Output: Base64 QR Code</div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default QRCodeNode;
-
-
-
-
-// import React, { useState } from "react";
-// import { Handle, Position } from "@xyflow/react";
-// import { Play, Plus } from "lucide-react";
-
-// const QRCodeNode = ({ id, data = {} }) => {
-//   const [scale, setScale] = useState(data.config?.scale || 4);
-//   const [format, setFormat] = useState(data.config?.format || "png");
-
-//   const flowData = data.flowData || {};
-//   const endpoint = flowData.endpoint || "/";
-//   const schemaInputs = flowData.schemaInputs || [];
-
-//   // 👉 Test button handler
-//   const runTest = () => {
-//     if (!endpoint || endpoint === "/") {
-//       alert("No endpoint set. Connect your flow first.");
-//       return;
-//     }
-
-//     window.dispatchEvent(
-//       new CustomEvent("testService", {
-//         detail: {
-//           nodeId: id,
-//           config: { scale, format },
-//           flowData,
-//         },
-//       })
-//     );
-//   };
-
-//   // 👉 Add-service button handler
-//   const openAddService = () => {
-//     window.dispatchEvent(
-//       new CustomEvent("openServicePopup", {
-//         detail: { parentId: id },
-//       })
-//     );
-//   };
-
-//   return (
-//     <div className="relative flex flex-col gap-3 p-4 bg-gradient-to-b from-purple-50 to-white border-2 border-purple-300 rounded-xl shadow-md w-[260px] hover:shadow-lg transition-all">
-//       <Handle
-//         type="target"
-//         position={Position.Top}
-//         className="!bg-purple-500 w-3 h-3"
-//       />
-
-//       {/* Header (just adding test button on right) */}
-//       <div className="flex items-center justify-between">
-//         <div className="flex items-center gap-2">
-//           <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-//           <h4 className="text-sm font-bold text-purple-800">
-//             Generate QR Code
-//           </h4>
-//         </div>
-
-//         {/* ⭐ Test Button */}
-//         <button
-//           onClick={runTest}
-//           className="text-xs px-2 py-1 rounded bg-green-600 text-white hover:bg-green-700 flex items-center gap-1"
-//         >
-//           <Play size={12} /> Test
-//         </button>
-//       </div>
-
-//       {/* Shows input from schema */}
-//       <div className="bg-white p-2 rounded border border-purple-200 text-xs">
-//         <div className="text-gray-500 mb-1">← Inputs from Schema:</div>
-//         {schemaInputs.length > 0 ? (
-//           schemaInputs.map((inp, i) => (
-//             <div key={i} className="text-purple-700 font-mono text-[10px]">
-//               • {inp.name} ({inp.type})
-//             </div>
-//           ))
-//         ) : (
-//           <div className="text-gray-400 italic">No inputs defined</div>
-//         )}
-//       </div>
-
-//       {/* Config */}
-//       <div className="space-y-2">
-//         <label className="block text-xs text-gray-700 font-medium">Scale</label>
-//         <select
-//           value={scale}
-//           onChange={(e) => setScale(Number(e.target.value))}
-//           className="w-full px-2 py-1 text-xs border rounded focus:outline-none focus:ring-1 focus:ring-purple-500"
-//         >
-//           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((s) => (
-//             <option key={s} value={s}>
-//               {s}
-//             </option>
-//           ))}
-//         </select>
-
-//         <label className="block text-xs text-gray-700 font-medium">
-//           Format
-//         </label>
-//         <select
-//           value={format}
-//           onChange={(e) => setFormat(e.target.value)}
-//           className="w-full px-2 py-1 text-xs border rounded focus:outline-none focus:ring-1 focus:ring-purple-500"
-//         >
-//           <option value="png">PNG</option>
-//           <option value="svg">SVG</option>
-//           <option value="dataURL">Base64</option>
-//         </select>
-//       </div>
-
-//       {/* Output indicator */}
-//       <div className="bg-white p-2 rounded border border-dashed border-purple-300 text-xs">
-//         <div className="text-gray-500">→ Output: Base64 QR Code</div>
-//       </div>
-
-//       {/* ⭐ Bottom Add (+) Button */}
-//       <button
-//         onClick={openAddService}
-//         className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-fuchsia-600 text-white flex items-center justify-center shadow-lg hover:scale-105"
-//       >
-//         <Plus size={16} />
-//       </button>
-
-//       <Handle
-//         type="source"
-//         position={Position.Bottom}
-//         className="!bg-purple-500 w-3 h-3"
-//       />
-//     </div>
-//   );
-// };
-
-// export default QRCodeNode;
-
-
-
-
+// client/src/features/serviceNodes/services/qrCode/QRCodeNode.jsx
 import React, { useState } from "react";
 import { Handle, Position } from "@xyflow/react";
-import { Play, Plus } from "lucide-react";
 
-const QRCodeNode = ({ id, data = {} }) => {
+const QRCodeNode = ({ data = {} }) => {
   const [scale, setScale] = useState(data.config?.scale || 4);
   const [format, setFormat] = useState(data.config?.format || "png");
-
+  
   const flowData = data.flowData || {};
   const endpoint = flowData.endpoint || "/";
   const schemaInputs = flowData.schemaInputs || [];
 
-  // 👉 Test button (NEW: no endpoint check, no alerts)
-  const runTest = () => {
-    window.dispatchEvent(
-      new CustomEvent("openQrTest", {
-        detail: { nodeId: id, scale, format },
-      })
-    );
-  };
-
-  // 👉 Add-service (+) button
-  const openAddService = () => {
-    window.dispatchEvent(
-      new CustomEvent("openServicePopup", {
-        detail: { parentId: id },
-      })
-    );
-  };
-
+  
+  
   return (
     <div className="relative flex flex-col gap-3 p-4 bg-gradient-to-b from-purple-50 to-white border-2 border-purple-300 rounded-xl shadow-md w-[260px] hover:shadow-lg transition-all">
-      <Handle
-        type="target"
-        position={Position.Top}
-        className="!bg-purple-500 w-3 h-3"
-      />
+      <Handle type="target" position={Position.Top} className="!bg-purple-500 w-3 h-3" />
+      <Handle type="source" position={Position.Bottom} className="!bg-purple-500 w-3 h-3" />
 
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-          <h4 className="text-sm font-bold text-purple-800">
-            Generate QR Code
-          </h4>
-        </div>
-
-        {/* ⭐ Test Button */}
-        <button
-          onClick={runTest}
-          className="text-xs px-2 py-1 rounded bg-green-600 text-white hover:bg-green-700 flex items-center gap-1"
-        >
-          <Play size={12} /> Test
-        </button>
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+        <h4 className="text-sm font-bold text-purple-800">Generate QR Code</h4>
       </div>
 
-      {/* Inputs from schema */}
+      {/* Shows input from schema */}
       <div className="bg-white p-2 rounded border border-purple-200 text-xs">
         <div className="text-gray-500 mb-1">← Inputs from Schema:</div>
         {schemaInputs.length > 0 ? (
@@ -482,7 +237,7 @@ const QRCodeNode = ({ id, data = {} }) => {
         )}
       </div>
 
-      {/* Config */}
+      {/* Service Config */}
       <div className="space-y-2">
         <label className="block text-xs text-gray-700 font-medium">Scale</label>
         <select
@@ -497,9 +252,7 @@ const QRCodeNode = ({ id, data = {} }) => {
           ))}
         </select>
 
-        <label className="block text-xs text-gray-700 font-medium">
-          Format
-        </label>
+        <label className="block text-xs text-gray-700 font-medium">Format</label>
         <select
           value={format}
           onChange={(e) => setFormat(e.target.value)}
@@ -511,24 +264,10 @@ const QRCodeNode = ({ id, data = {} }) => {
         </select>
       </div>
 
-      {/* Output */}
+      {/* Output indicator */}
       <div className="bg-white p-2 rounded border border-dashed border-purple-300 text-xs">
         <div className="text-gray-500">→ Output: Base64 QR Code</div>
       </div>
-
-      {/* ⭐ Bottom Add + Button */}
-      <button
-        onClick={openAddService}
-        className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-fuchsia-600 text-white flex items-center justify-center shadow-lg hover:scale-105"
-      >
-        <Plus size={16} />
-      </button>
-
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        className="!bg-purple-500 w-3 h-3"
-      />
     </div>
   );
 };

@@ -164,7 +164,6 @@ import SchemaPopup from "../InputSchema/SchemaPopup.jsx";
 import ServicePopup from "../../features/serviceNodes/components/ServicePopup.jsx";
 import QRCodeNode from "../../features/serviceNodes/services/qrCode/QRCodeNode.jsx";
 import OutputNode from "../../features/OutputNode/OutputNode.jsx";
-import TestPanel from "./TestPanel.jsx";
 
 const nodeTypes = {
   // schemaNode: SchemaNode,
@@ -185,7 +184,7 @@ const FlowBuilder = () => {
     showConnect,
     setShowConnect,
     addServiceNode,
-    // setAddTargetId,
+    setAddTargetId,
   } = useFlowLogic();
 
   const { user } = useAuth(); // assumes user object like { name: "Om Patel", email: ... }
@@ -197,14 +196,6 @@ const FlowBuilder = () => {
     onSave: null,
   });
   const [showServicePopup, setShowServicePopup] = useState(false);
-  const [showTestPanel, setShowTestPanel] = useState(false);
-
-  useEffect(() => {
-    const handler = () => setShowTestPanel(true);
-    window.addEventListener("openQrTest", handler);
-    return () => window.removeEventListener("openQrTest", handler);
-  }, []);
-
 
   
 
@@ -258,6 +249,7 @@ const FlowBuilder = () => {
             fitView
             // nodeInteractionWidth={40}
             nodesDraggable={true}
+            
             nodesConnectable={false}
             elementsSelectable={false}
             nodeTypes={nodeTypes}
@@ -294,11 +286,6 @@ const FlowBuilder = () => {
             <SchemaPopup onClose={closePopup} onSave={popup.onSave} />
           )}
 
-          <TestPanel
-            open={showTestPanel}
-            onClose={() => setShowTestPanel(false)}
-          />
-
           {/* {showServicePopup && (
             <ServicePopup
               onClose={() => setShowServicePopup(false)}
@@ -313,7 +300,7 @@ const FlowBuilder = () => {
             <ServicePopup
               onClose={() => setShowServicePopup(false)}
               onSelect={(serviceId) => {
-                addServiceNode(serviceId); // ← create new node
+                addServiceNode( serviceId); // ← create new node
                 setShowServicePopup(false);
               }}
             />
